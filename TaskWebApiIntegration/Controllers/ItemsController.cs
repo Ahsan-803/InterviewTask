@@ -23,7 +23,8 @@ namespace TaskWebApiIntegration.Controllers
             catch (Exception ex)
             {
                 // Handle exceptions and display an error message
-                ViewBag.Error = "Failed to load items from the API.";
+                //ViewBag.Error = "Failed to load items from the API.";
+                ViewBag.Error = ex.Message;
                 return View(); 
             }
         }
