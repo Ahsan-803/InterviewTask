@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskWebApi.Data;
 
@@ -11,9 +12,11 @@ using TaskWebApi.Data;
 namespace TaskWebApi.Migrations
 {
     [DbContext(typeof(TaskDbContext))]
-    partial class TaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240927055036_addtableandsetrelation")]
+    partial class addtableandsetrelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,8 +51,8 @@ namespace TaskWebApi.Migrations
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<decimal?>("ItemCost")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<float?>("ItemCost")
+                        .HasColumnType("real");
 
                     b.Property<string>("ItemDescription")
                         .HasColumnType("nvarchar(max)");
@@ -67,8 +70,8 @@ namespace TaskWebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderedDetailsId"));
 
-                    b.Property<decimal?>("Cost")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<float?>("Cost")
+                        .HasColumnType("real");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
@@ -135,8 +138,8 @@ namespace TaskWebApi.Migrations
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<decimal?>("OrderedAmount")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<float?>("OrderedAmount")
+                        .HasColumnType("real");
 
                     b.Property<DateTime?>("OrderedDate")
                         .HasColumnType("datetime2");
