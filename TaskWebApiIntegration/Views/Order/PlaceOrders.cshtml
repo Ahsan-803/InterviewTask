@@ -1,0 +1,40 @@
+﻿@model TaskWebApiIntegration.Models.TasksMvcModals.OrderPlacementViewModel
+
+<h2>Place an Order</h2>
+
+<form asp-action="PlaceOrders" method="post">
+    <div>
+        <h3>Customer ID: @Model.CustomerId</h3>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.OrderItems.Count; i++)
+            {
+                <tr>
+                    <td>@Model.OrderItems[i].ItemDescription</td>
+                    <td>@Model.OrderItems[i].ItemCost</td>
+                    <td>
+                        <input type="number" name="OrderItems[@i].Quantity" value="1" class="form-control" />
+                        <input type="hidden" name="OrderItems[@i].ItemId" value="@Model.OrderItems[i].ItemId" />
+                        <input type="hidden" name="OrderItems[@i].ItemCost" value="@Model.OrderItems[i].ItemCost" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Place Order</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}

@@ -10,7 +10,8 @@ namespace TaskWebApi.Data
 
         //table add from class
         public DbSet<tblItem> tblItems { get; set;}
-
+        public DbSet<tblOrderDetails> tblOrderDetails { get; set;}
+        public DbSet<tblOrderMaster>  tblOrderMasters { get; set;}
 
     }
 }

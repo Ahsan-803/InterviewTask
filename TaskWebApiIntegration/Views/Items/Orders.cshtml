@@ -1,15 +1,15 @@
 ﻿@using TaskWebApi.Models
 
-@model List<tblItem>
+@model List<tblOrderMaster>
 
 <div class="row mt-3 mb-3">
     <div class="col-md-6">
-        <h2>Orders List</h2>
+        <h2>Items List</h2>
     </div>
-    <div class="col-md-6" >
+    <div class="col-md-6">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="addItems()"data-bs-target="#exampleModal" style="float: right;">
-            
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="addItems()" data-bs-target="#exampleModal" style="float: right;">
+            Add items
         </button>
     </div>
 </div>
@@ -32,7 +32,7 @@ else
                 <th>Item Description</th>
                 <th>Item Cost</th>
                 <th>Item Status</th>
-                <th>Action</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -41,11 +41,11 @@ else
                 foreach (var item in Model)
                 {
                     <tr>
-                        <td class="ID">@item.ItemId</td>
-                        <td class="itemDes">@item.ItemDescription</td>
-                        <td class="itemCost">@item.ItemCost</td>
+                        <td class="ID">@item.OrderId</td>
+                        <td class="itemDes">@item.OrderDetails</td>
+                        <td class="itemCost">@item.OrderedAmount</td>
                         <td>
-                            @if(item.IsActive == true)
+                            @if (item.IsActive == true)
                             {
                                 <span class="badge bg-success">Active</span>
                             }
@@ -54,17 +54,7 @@ else
                                 <span class="badge bg-danger">Inactive</span>
                             }
                         </td>
-                        <td>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-sm btn-primary open-AddBookDialog" onclick="getEditById(@item.ItemId)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class='fas fa-pencil'>Edit</i>
-                            </button>
-                       
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-sm btn-danger" onclick="getDeleteById(@item.ItemId)" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                <i class='fas fa-trash'>Delete</i>
-                            </button>
-                        </td>
+                        
                     </tr>
                 }
             }
@@ -151,7 +141,7 @@ else
 
 <script>
     function getDeleteById(id) {
-            console.log(id);
+        console.log(id);
         $("#ItemId1").val(id);
     }
     function getEditById(id) {
@@ -173,7 +163,7 @@ else
         var ID = $(this).closest('tr').find('.ID').text();
         var itemDes = $(this).closest('tr').find('.itemDes').text().trim();
         var itemCost = $(this).closest('tr').find('.itemCost').text().trim();
-       
+
         $("#id", myModal).val(ID);
         $("#ItemDescription", myModal).val(itemDes);
         $("#ItemCost", myModal).val(itemCost);

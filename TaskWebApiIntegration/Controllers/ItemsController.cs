@@ -14,6 +14,21 @@ namespace TaskWebApiIntegration.Controllers
             _itemService = itemService;
         }
 
+        public async Task<IActionResult> Orders(string message)
+        {
+            try
+            {
+                ViewBag.message = message;
+                var items = await _itemService.GetOrdersAsync();
+                return View(items);
+            }
+            catch (Exception ex)
+            {
+                //ViewBag.Error = "Failed to load items from the API.";
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
         public async Task<IActionResult> Index(string message)
         {
             try
