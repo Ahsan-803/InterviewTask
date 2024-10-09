@@ -4,13 +4,10 @@
 
 <div class="row mt-3 mb-3">
     <div class="col-md-6">
-        <h2>Items List</h2>
+        <h2>Order List</h2>
     </div>
     <div class="col-md-6">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="addItems()" data-bs-target="#exampleModal" style="float: right;">
-            Add items
-        </button>
+
     </div>
 </div>
 @if (ViewBag.message != null)
@@ -28,10 +25,11 @@ else
     <table class="table table-striped" id="tblItems">
         <thead>
             <tr>
-                <th>Item Id</th>
-                <th>Item Description</th>
-                <th>Item Cost</th>
-                <th>Item Status</th>
+                <th>Order Id</th>
+                <th>Order Total Amount</th>
+                <th>Customer ID</th>
+                <th>Order Status</th>
+                <th>Order Date</th>
                 
             </tr>
         </thead>
@@ -42,8 +40,8 @@ else
                 {
                     <tr>
                         <td class="ID">@item.OrderId</td>
-                        <td class="itemDes">@item.OrderDetails</td>
                         <td class="itemCost">@item.OrderedAmount</td>
+                        <td>1</td>
                         <td>
                             @if (item.IsActive == true)
                             {
@@ -54,6 +52,7 @@ else
                                 <span class="badge bg-danger">Inactive</span>
                             }
                         </td>
+                        <td class="itemDes">@item.CreatedDate.Value.ToShortDateString()</td>
                         
                     </tr>
                 }

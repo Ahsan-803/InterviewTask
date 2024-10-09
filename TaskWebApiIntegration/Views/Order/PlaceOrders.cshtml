@@ -1,18 +1,24 @@
 ﻿@model TaskWebApiIntegration.Models.TasksMvcModals.OrderPlacementViewModel
 
-<h2>Place an Order</h2>
+<h2>Place an Order:</h2>
 
-<form asp-action="PlaceOrders" method="post">
-    <div>
-        <h3>Customer ID: @Model.CustomerId</h3>
+<!-- Message container for validation errors -->
+<div id="showmsg" class="alert alert-danger" style="display:none;">
+    Please enter at least one item quantity greater than zero.
+</div>
+
+<form id="orderForm" asp-action="PlaceOrders" method="post">
+    <div class="text-center">
+        <h5>Customer ID: @Model.CustomerId</h5>
     </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Item</th>
-                <th>Price</th>
+                <th>Item Name</th>
+                <th>Price Per Item</th>
                 <th>Quantity</th>
+                <th>Total Item Cost</th>
             </tr>
         </thead>
         <tbody>
@@ -22,19 +28,90 @@
                     <td>@Model.OrderItems[i].ItemDescription</td>
                     <td>@Model.OrderItems[i].ItemCost</td>
                     <td>
-                        <input type="number" name="OrderItems[@i].Quantity" value="1" class="form-control" />
+                        <input type="number" name="OrderItems[@i].Quantity" value="0" class="form-control quantity-input" data-cost="@Model.OrderItems[i].ItemCost" onchange="calculateTotal()" />
                         <input type="hidden" name="OrderItems[@i].ItemId" value="@Model.OrderItems[i].ItemId" />
                         <input type="hidden" name="OrderItems[@i].ItemCost" value="@Model.OrderItems[i].ItemCost" />
                     </td>
+                    <td class="item-total">@Model.OrderItems[i].ItemCost</td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <button type="submit" class="btn btn-success">Place Order</button>
+    <div class="total-amount" style="font-size: 1.5em; text-align: right; margin-top: 20px;">
+        <strong>Total Amount: <span id="totalAmount">0</span></strong>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2" style="float:right">Place Order</button>
 </form>
 
 @if (ViewBag.Message != null)
 {
     <div class="alert alert-success">@ViewBag.Message</div>
 }
+
+@section Scripts {
+    <script type="text/javascript">
+        // Function to calculate the total amount based on item quantities
+        function calculateTotal() {
+            let totalAmount = 0;
+
+            // Loop through each row and calculate item totals
+            document.querySelectorAll('tbody tr').forEach(function (row) {
+                let quantityInput = row.querySelector('.quantity-input');
+                let itemCost = parseFloat(quantityInput.getAttribute('data-cost'));
+                let quantity = parseInt(quantityInput.value);
+
+                // If quantity is NaN or less than 0, set it to 0
+                if (isNaN(quantity) || quantity < 0) {
+                    quantity = 0;
+                }
+
+                // Calculate total for each item
+                let itemTotal = itemCost * quantity;
+                row.querySelector('.item-total').innerText = itemTotal.toFixed(2);
+
+                // Add to the overall total amount
+                totalAmount += itemTotal;
+            });
+
+            // Display the total amount in the Total Amount section
+            document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+        }
+
+        // Check if at least one item has a quantity > 0
+        function validateOrder() {
+            let isValid = false;
+
+            // Hide the message initially
+            document.getElementById("showmsg").style.display = "none";
+
+            document.querySelectorAll('.quantity-input').forEach(function (input) {
+                let quantity = parseInt(input.value);
+                if (!isNaN(quantity) && quantity > 0) {
+                    isValid = true;
+                }
+            });
+
+            if (!isValid) {
+                // Show the message if validation fails
+                document.getElementById("showmsg").style.display = "block";
+            }
+
+            return isValid;
+        }
+
+        // Hook into form submission to check if the order is valid
+        document.getElementById('orderForm').addEventListener('submit', function (event) {
+            if (!validateOrder()) {
+                event.preventDefault(); // Stop the form from submitting if validation fails
+            }
+        });
+
+        // Initialize total amount on page load
+        window.onload = function () {
+            calculateTotal();
+        };
+    </script>
+}
+

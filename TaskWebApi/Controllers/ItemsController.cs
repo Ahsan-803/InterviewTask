@@ -20,7 +20,7 @@ namespace TaskWebApi.Controllers
         [Route("GetItems")]
         public IActionResult GetItems()
         {
-            var list = _DbContext.tblItems.Where(x => x.IsDeleted != true).ToList();
+            var list = _DbContext.tblItems.Where(x => x.IsDeleted != true).ToList().OrderByDescending(o => o.ItemId);
             return Ok(list);
         }
 

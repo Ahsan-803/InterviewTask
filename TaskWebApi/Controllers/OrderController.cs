@@ -17,7 +17,7 @@ namespace TaskWebApi.Controllers
         [Route("api/getorders")]
         public IActionResult GetOrders()
         {
-            var list = _dbContext.tblOrderMasters.Where(x => x.IsDeleted != true).ToList();
+            var list = _dbContext.tblOrderMasters.Where(x => x.IsDeleted != true).ToList().OrderByDescending(o => o.OrderId);
             return Ok(list);
         }
 
