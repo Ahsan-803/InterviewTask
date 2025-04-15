@@ -14,4 +14,13 @@
     <ProjectReference Include="..\TaskWebApi\TaskWebApi.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<TargetPath>mvc.appsettings.json</TargetPath>
+		</None>
+		<None Update="appsettings.Development.json">
+			<TargetPath>mvc.appsettings.Development.json</TargetPath>
+		</None>
+	</ItemGroup>
+
 </Project>

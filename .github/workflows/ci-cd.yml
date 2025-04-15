@@ -28,17 +28,11 @@ jobs:
     - name: Run tests
       run: dotnet test InterviewTask.sln --no-build --verbosity normal
 
-    # - name: Publish API project
-    #   run: dotnet publish TaskWebApi/TaskWebApi.csproj -c Release -o ./publish/api
-
-    # - name: Publish MVC project
-    #   run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/mvc
-
     - name: Publish API project
-      run: dotnet publish TaskWebApi/TaskWebApi.csproj -c Release -o ./publish/TaskWebApi
+      run: dotnet publish TaskWebApi/TaskWebApi.csproj -c Release -o ./publish/api
 
-    # - name: Publish MVC project
-    #   run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/TaskWebApiIntegration
+    - name: Publish MVC project
+      run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/mvc
 
     - name: Notify Slack (optional)
       if: success()
