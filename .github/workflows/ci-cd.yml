@@ -29,28 +29,28 @@ jobs:
     - name: Publish API project
       run: dotnet publish TaskWebApi/TaskWebApi.csproj -c Release -o ./publish/api
 
-  publish-mvc:
-    name: Build and Publish MVC
-    runs-on: ubuntu-latest
-    needs: publish-api
+  # publish-mvc:
+  #   name: Build and Publish MVC
+  #   runs-on: ubuntu-latest
+  #   needs: publish-api
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v3
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
+  #   - name: Setup .NET
+  #     uses: actions/setup-dotnet@v3
+  #     with:
+  #       dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore TaskWebApiIntegration/TaskWebApiIntegration.csproj
+  #   - name: Restore dependencies
+  #     run: dotnet restore TaskWebApiIntegration/TaskWebApiIntegration.csproj
 
-    - name: Build MVC project
-      run: dotnet build TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release --no-restore
+  #   - name: Build MVC project
+  #     run: dotnet build TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release --no-restore
 
-    - name: Publish MVC project
-      run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/mvc
+  #   - name: Publish MVC project
+  #     run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/mvc
 
     - name: Notify Slack (optional)
       if: success()
