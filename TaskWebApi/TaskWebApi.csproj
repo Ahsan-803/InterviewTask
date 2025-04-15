@@ -16,13 +16,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
-	<ItemGroup>
-		<None Update="appsettings.json">
-			<TargetPath>api.appsettings.json</TargetPath>
-		</None>
-		<None Update="appsettings.Development.json">
-			<TargetPath>api.appsettings.Development.json</TargetPath>
-		</None>
-	</ItemGroup>
-
 </Project>
