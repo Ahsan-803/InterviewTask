@@ -34,6 +34,7 @@ namespace TaskWebApiIntegration.Controllers
             try
             { 
                 ViewBag.message = message;
+                //var items = await _itemService.GetItemsAsync();
                 var items = await _itemService.GetItemsAsync();
                 return View(items);
             }

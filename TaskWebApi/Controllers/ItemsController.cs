@@ -35,6 +35,7 @@ namespace TaskWebApi.Controllers
                     item.IsActive = true;
                     item.CreatedDate = DateTime.Now;
                     item.CreatedBy = 1;
+                    //item.IsDeleted = false;
                     item.IsDeleted = false;
                     _DbContext.tblItems.Add(item);  
                     int save = _DbContext.SaveChanges();
