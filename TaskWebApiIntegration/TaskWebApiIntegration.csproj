@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaskWebApi\TaskWebApi.csproj" />
+    <ProjectReference Include="..\TaskWebApi\TaskWebApi.csproj" PrivateAssets="all"/>
   </ItemGroup>
 
 </Project>
