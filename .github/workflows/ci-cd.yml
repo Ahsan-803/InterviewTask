@@ -1,0 +1,46 @@
+name: .NET 8 CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore InterviewTask.sln
+
+    - name: Build solution
+      run: dotnet build InterviewTask.sln --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test InterviewTask.sln --no-build --verbosity normal
+
+    - name: Publish API project
+      run: dotnet publish TaskWebApi/TaskWebApi.csproj -c Release -o ./publish/api
+
+    - name: Publish MVC project
+      run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/mvc
+
+    - name: Notify Slack (optional)
+      if: success()
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "text": "✅ CI/CD pipeline successful! Both *TaskWebApi* and *TaskWebApiIntegration* are published from *${{ github.repository }}* by *${{ github.actor }}* 🎉"
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
