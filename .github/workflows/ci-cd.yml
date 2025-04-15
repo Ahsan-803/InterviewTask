@@ -37,8 +37,8 @@ jobs:
     - name: Publish API project
       run: dotnet publish TaskWebApi/TaskWebApi.csproj -c Release -o ./publish/TaskWebApi
 
-    - name: Publish MVC project
-      run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/TaskWebApiIntegration
+    # - name: Publish MVC project
+    #   run: dotnet publish TaskWebApiIntegration/TaskWebApiIntegration.csproj -c Release -o ./publish/TaskWebApiIntegration
 
     - name: Notify Slack (optional)
       if: success()
